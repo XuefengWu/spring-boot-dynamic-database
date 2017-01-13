@@ -7,14 +7,13 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -36,6 +35,8 @@ public class RepositoryConfig {
     @Autowired
     JpaVendorAdapter jpaVendorAdapter;
 
+    @Autowired
+    private Environment environment;
 
     @Bean(name = "entityManager")
     public EntityManager entityManager() {
@@ -72,6 +73,13 @@ public class RepositoryConfig {
     }
 
     public DataSource dataSource() {
+
+        //TODO load properties files by activeProfiles. --spring.profiles.active=dev,sit,uat,prod
+        //String[] activeProfiles = this.environment.getActiveProfiles();
+        //File[] files = Paths.get("tenants").toFile().listFiles();
+        //Properties tenantProperties = new Properties();
+        //tenantProperties.load(new FileInputStream(propertyFile));
+                
         AbstractRoutingDataSource dataSource = new CustomerRoutingDataSource();
         Map<Object,Object>  targetDataSources = new HashMap<>();
         targetDataSources.put(CustomerContextHolder.CustomerType.GOLD,goldDataSource());
