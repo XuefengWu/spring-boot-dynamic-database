@@ -9,20 +9,19 @@ spring dynamic Routing DataSource
 
 Start
 ----
+test and build
+ ===
+```
+./gradlew build
+```
 
 prepare database
 ===
 ```
-gradlew gold update
-gradlew silver update
-gradlew bronze update
+./gradlew gold update
+./gradlew silver update
+./gradlew bronze update
 
-```
-
-test and build
- ===
-```
-gradlew build
 ```
 
 start service

@@ -39,11 +39,12 @@ public class CustomerTests {
     @Autowired
     private EntityManagerFactory entityManagerFactory;
 
+    private String DROP_TABLE = "DROP TABLE IF EXISTS  DATABASECHANGELOG;DROP TABLE IF EXISTS CUSTOMER;";
 
     @Test
     public void testDataSourceRoutingGold() throws Exception {
         CustomerContextHolder.setCustomerType(CustomerContextHolder.CustomerType.GOLD);
-        entityManager.createNativeQuery("DROP TABLE IF EXISTS CUSTOMER;CREATE TABLE CUSTOMER(id int,firstName varchar(255),lastName varchar(255))").executeUpdate();
+        entityManager.createNativeQuery(DROP_TABLE + "CREATE TABLE CUSTOMER(id int,firstName varchar(255),lastName varchar(255))").executeUpdate();
         Customer customer = new Customer(1L, "GOLD", "last");
         entityManager.persist(customer);
         assertThat(customers.count()).isEqualTo(1);
@@ -54,7 +55,7 @@ public class CustomerTests {
     @Test
     public void testDataSourceRoutingSilver() throws Exception {
         CustomerContextHolder.setCustomerType(CustomerContextHolder.CustomerType.SILVER);
-        entityManager.createNativeQuery("DROP TABLE IF EXISTS CUSTOMER;CREATE TABLE CUSTOMER(id int,firstName varchar(255),lastName varchar(255))").executeUpdate();
+        entityManager.createNativeQuery(DROP_TABLE + "CREATE TABLE CUSTOMER(id int,firstName varchar(255),lastName varchar(255))").executeUpdate();
         Customer customer = new Customer(1L, "SILVER", "last");
         entityManager.persist(customer);
         assertThat(customers.count()).isEqualTo(1);
@@ -65,7 +66,7 @@ public class CustomerTests {
     @Test
     public void testDataSourceRoutingDefault() throws Exception {
         CustomerContextHolder.clearCustomerType();
-        entityManager.createNativeQuery("DROP TABLE IF EXISTS CUSTOMER;CREATE TABLE CUSTOMER(id int,firstName varchar(255),lastName varchar(255))").executeUpdate();
+        entityManager.createNativeQuery(DROP_TABLE + "CREATE TABLE CUSTOMER(id int,firstName varchar(255),lastName varchar(255))").executeUpdate();
         entityManager.persist(new Customer(1L, "Default1", "last1"));
         entityManager.persist(new Customer(2L, "Default2", "last2"));
         assertThat(customers.count()).isEqualTo(2);
