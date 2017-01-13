@@ -10,7 +10,7 @@ public class CustomerContextHolder {
     }
 
 
-    private static final ThreadLocal<CustomerType> contextHolder = new ThreadLocal<CustomerType>();
+    //private static final ThreadLocal<CustomerType> contextHolder = new ThreadLocal<CustomerType>();
     private static CustomerType type = null;
 
     public static void setCustomerType(CustomerType customerType) {
