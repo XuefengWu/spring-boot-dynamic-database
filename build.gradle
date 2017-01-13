@@ -1,0 +1,84 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.4.3.RELEASE"
+        classpath 'org.liquibase:liquibase-core:3.4.1'
+        classpath "org.liquibase:liquibase-gradle-plugin:1.1.1"
+        classpath 'com.h2database:h2:1.4.193'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'liquibase'
+
+jar {
+    baseName = 'spring-boot-dynamic-database'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("com.h2database:h2")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+task('gold') << {
+    println "----- executing gold -----"
+
+    liquibase {
+        activities {
+            main {
+                changeLogFile "$projectDir/src/main/resources/db/gold/changelog.xml"
+                url 'jdbc:h2:~/temp/db/gold;MODE=PostgreSQL'
+                username 'sa'
+                password ''
+            }
+        }
+    }
+}
+
+
+task('silver') << {
+    println "----- executing silver -----"
+
+    liquibase {
+        activities {
+            main {
+                changeLogFile "$projectDir/src/main/resources/db/silver/changelog.xml"
+                url 'jdbc:h2:~/temp/db/silver;MODE=PostgreSQL'
+                username 'sa'
+                password ''
+            }
+        }
+    }
+}
+
+
+task('bronze') << {
+    println "----- executing bronze -----"
+
+    liquibase {
+        activities {
+            main {
+                changeLogFile "$projectDir/src/main/resources/db/bronze/changelog.xml"
+                url 'jdbc:h2:~/temp/db/bronze;MODE=PostgreSQL'
+                username 'sa'
+                password ''
+            }
+        }
+    }
+}
