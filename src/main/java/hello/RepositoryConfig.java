@@ -76,6 +76,7 @@ public class RepositoryConfig {
         Map<Object,Object>  targetDataSources = new HashMap<>();
         targetDataSources.put(CustomerContextHolder.CustomerType.GOLD,goldDataSource());
         targetDataSources.put(CustomerContextHolder.CustomerType.SILVER,silverDataSource());
+        targetDataSources.put(CustomerContextHolder.CustomerType.BRONZE,bronzeDataSource());
         dataSource.setTargetDataSources(targetDataSources);
         dataSource.setDefaultTargetDataSource(bronzeDataSource());
         dataSource.afterPropertiesSet();
