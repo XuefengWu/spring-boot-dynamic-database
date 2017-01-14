@@ -1,5 +1,6 @@
 package hello;
 
+import com.zaxxer.hikari.HikariDataSource;
 import dynamic.CustomerContextHolder;
 import dynamic.CustomerRoutingDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,8 +99,13 @@ public class RepositoryConfig {
         String username = "sa";
         String password = "";
         String driverClassName = "org.h2.Driver";
-        DriverManagerDataSource dataSource = new DriverManagerDataSource(databaseUrl, username, password);
-        dataSource.setDriverClassName(driverClassName);
+        String dataSourceClassName = "org.h2.jdbcx.JdbcDataSource";
+        HikariDataSource dataSource = new HikariDataSource();
+        dataSource.setMaximumPoolSize(100);
+        dataSource.setDataSourceClassName(dataSourceClassName);
+        dataSource.addDataSourceProperty("url", databaseUrl);
+        dataSource.addDataSourceProperty("user", username);
+        dataSource.addDataSourceProperty("password", password);
         return dataSource;
     }
 
@@ -109,8 +115,13 @@ public class RepositoryConfig {
         String username = "sa";
         String password = "";
         String driverClassName = "org.h2.Driver";
-        DriverManagerDataSource dataSource = new DriverManagerDataSource(databaseUrl, username, password);
-        dataSource.setDriverClassName(driverClassName);
+        String dataSourceClassName = "org.h2.jdbcx.JdbcDataSource";
+        HikariDataSource dataSource = new HikariDataSource();
+        dataSource.setMaximumPoolSize(100);
+        dataSource.setDataSourceClassName(dataSourceClassName);
+        dataSource.addDataSourceProperty("url", databaseUrl);
+        dataSource.addDataSourceProperty("user", username);
+        dataSource.addDataSourceProperty("password", password);
         return dataSource;
     }
 
@@ -120,8 +131,13 @@ public class RepositoryConfig {
         String username = "sa";
         String password = "";
         String driverClassName = "org.h2.Driver";
-        DriverManagerDataSource dataSource = new DriverManagerDataSource(databaseUrl, username, password);
-        dataSource.setDriverClassName(driverClassName);
+        String dataSourceClassName = "org.h2.jdbcx.JdbcDataSource";
+        HikariDataSource dataSource = new HikariDataSource();
+        dataSource.setMaximumPoolSize(100);
+        dataSource.setDataSourceClassName(dataSourceClassName);
+        dataSource.addDataSourceProperty("url", databaseUrl);
+        dataSource.addDataSourceProperty("user", username);
+        dataSource.addDataSourceProperty("password", password);
         return dataSource;
     }
 
